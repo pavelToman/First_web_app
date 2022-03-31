@@ -10,14 +10,16 @@ def hw():
 #použití dynamické routy a vrácení stringu s formatem. Pokud zadám /hello >>> Hello, Pablo, pokud zadám /hello/Pavel >>> Hello, Pavel
 @app.route("/hello/")
 @app.route("/hello/<jmeno>")
-def hello(jmeno="Pablo"):
+def hello(jmeno="Tom"):
     return 'Hello, {}!'.format(jmeno)
 
 #HTML a dynamický tamplate s dynamickou routou - pokud zadám /hell >>> Hello, Pes, pokud zadám /hell/kočka >>> Hello, kočka
 @app.route("/hell/")
 @app.route("/hell/<zvire>")
 def hell(zvire="Pes"):
-    return render_template("zvire.html", zvire=zvire)
+    if request.args.get("zvire"):
+        zvire = request.args.get("zvire")
+    return render_template("zvire.html", popo=zvire)
 
 #index s inputem od uživetele a metodou POST
 @app.route("/")
